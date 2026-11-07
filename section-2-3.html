@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Matrix Multiplication</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<link href="_static/pretext/css/ol-markers.css" rel="stylesheet" type="text/css">
+<script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
+  },
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math"
+  },
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
+  },
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "_static/pretext/js/lib"
+    }
+  },
+  "startup": {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  }
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Linear Algebra Lecture Notes">
+<meta property="book:author" content="Phillipson and Roch">
+<script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '8.4.0';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.7e2ee203f2ecd6c8.bundle.js"></script><script src="_static/prefix-23.7d27cb317c36911a.bundle.js"></script><script src="_static/prefix-runestone.35a40fea06647cf2.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-runestone.7062ede5334282a6.css">
+<script src="_static/pretext/js/lti_iframe_resizer.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script>
+</head>
+<body class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner"><div class="title-container">
+<h1 class="heading"><a href="math345-notes.html"><span class="title">Linear Algebra Lecture Notes</span> <span class="subtitle">Math 345 · Chapters 1–3 and 6</span></a></h1>
+<p class="byline">Phillipson and Roch</p>
+</div></div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
+</div>
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="section-2-2.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="chapter-2.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="section-2-6.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter">
+<div class="toc-title-box"><a href="math345-notes-3.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-preface"><div class="toc-title-box"><a href="about.html" class="internal"><span class="title">About these notes</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-1.html" class="internal"><span class="codenumber">1</span> <span class="title">Systems of Linear Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-1-1.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Solutions and Elementary Operations</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-1-2.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Gaussian Elimination</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-1-3.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Homogeneous Equations</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="chapter-2.html" class="internal"><span class="codenumber">2</span> <span class="title">Matrix Algebra</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-1.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Matrix Addition, Scalar Multiplication, and Transposition</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-2.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Matrix-Vector Multiplication</span></a></div></li>
+<li class="toc-item toc-section active"><div class="toc-title-box"><a href="section-2-3.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Matrix Multiplication</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-6.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Linear Transformations</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-4.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Matrix Inverses</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-3.html" class="internal"><span class="codenumber">3</span> <span class="title">Determinants (and Diagonalization)</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-3-1.html" class="internal"><span class="codenumber">3.1</span> <span class="title">The Cofactor Expansion</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-3-2.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Determinants and Matrix Inverses</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-6.html" class="internal"><span class="codenumber">4</span> <span class="title">Vector Spaces (Textbook Chapter 6)</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-section"><div class="toc-title-box"><a href="section-6-1.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Examples and Basic Properties</span></a></div></li></ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="section-2-3"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">2.3</span><span class="space"> </span><span class="title">Matrix Multiplication</span>
+</h2>
+<div class="para" id="section-2-3-2">
+<em class="emphasis">Textbook section 2.3.</em><div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-3-3">Video (3:40): three ways to see the matrix product <span class="process-math">\(AB\text{:}\)</span> column by column, entry by entry, and as a composition of transformations.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="video-box" style="width: 100%;padding-top: 56.25%; margin-left: 0%; margin-right: 0%;"><video id="section-2-3-4" class="video" controls="" poster="external/chapter-2/matrix-multiplication.png"><source src="external/chapter-2/matrix-multiplication.mp4" type="video/mp4"></source>Your browser does not support the &lt;video&gt; tag.</video></div>
+<article class="definition definition-like" id="ch2-definition-44"><h3 class="heading">
+<span class="type">Definition</span><span class="space"> </span><span class="codenumber">2.3.1</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="ch2-definition-44-1-1">
+<div class="para">Let <span class="process-math">\(A\)</span> be an <span class="process-math">\(m\times n\)</span> matrix, <span class="process-math">\(B\)</span> be an <span class="process-math">\(n\times k\)</span> matrix, and write</div>
+<div class="displaymath process-math">
+\begin{equation*}
+B=\begin{bmatrix}\mathbf{b}_1 &amp; \mathbf{b}_2 &amp;\cdots &amp; \mathbf{b}_k\end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">where <span class="process-math">\(\mathbf{b}_j\)</span> is column <span class="process-math">\(j\)</span> of <span class="process-math">\(B\text{.}\)</span> The <em class="emphasis">product</em> matrix <span class="process-math">\(AB\)</span> is the <span class="process-math">\(m\times k\)</span> matrix defined as follows:</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-definition-44-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para logical" id="ch2-definition-44-1-2">
+<div class="displaymath process-math">
+\begin{equation*}
+AB=A\begin{bmatrix}\mathbf{b}_1 &amp; \mathbf{b}_2 &amp;\cdots &amp; \mathbf{b}_k\end{bmatrix}=\begin{bmatrix}A\mathbf{b}_1 &amp; A\mathbf{b}_2 &amp;\cdots &amp; A\mathbf{b}_k\end{bmatrix}.
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-definition-44-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-definition-44-1-3">in other words, column <span class="process-math">\(j\)</span> of <span class="process-math">\(AB\)</span> is the matrix-vector product <span class="process-math">\(A\mathbf{b}_j\)</span> of <span class="process-math">\(A\)</span> and the corresponding column <span class="process-math">\(\mathbf{b}_j\)</span> of <span class="process-math">\(B\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-definition-44-1-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Definition 2.3.1"><a href="#ch2-definition-44" title="Copy heading and permalink for Definition 2.3.1">🔗</a></div></article><article class="example example-like" id="ch2-example-45"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.3.2</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="ch2-example-45-1-1">
+<div class="para">Let</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A = \left[ \begin{array}{rrr} 1 &amp; -3 &amp; 5 \\ 3 &amp; 1 &amp; 4 \end{array} \right] \text{ and } B = \left[ \begin{array}{rr} 5 &amp; 1 \\ -2 &amp; -6 \\ -1 &amp; 0 \end{array} \right] .
+\end{equation*}
+</div>
+<div class="para">Compute <span class="process-math">\(AB\text{.}\)</span>
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-45-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-22" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-22-1">Following the definition, we write <span class="process-math">\(B\)</span> in terms of its columns: <span class="process-math">\(B = \begin{bmatrix}\mathbf{b}_1 &amp; \mathbf{b}_2\end{bmatrix} = \begin{bmatrix} \begin{bmatrix}5 \\ -2 \\ -1\end{bmatrix} &amp; \begin{bmatrix}1 \\ -6 \\ 0\end{bmatrix} \end{bmatrix}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-22-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-22-2">Then <span class="process-math">\(AB = \begin{bmatrix}A\mathbf{b}_1 &amp; A\mathbf{b}_2\end{bmatrix}\)</span> where:<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-22-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-22-3">
+<span class="process-math">\(A\mathbf{b}_1 = \begin{bmatrix}1(5) + (-3)(-2) + 5(-1) \\ 3(5) + 1(-2) + 4(-1)\end{bmatrix} = \begin{bmatrix}5 + 6 - 5 \\ 15 - 2 - 4\end{bmatrix} = \begin{bmatrix}6 \\ 9\end{bmatrix}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-22-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-22-4">
+<span class="process-math">\(A\mathbf{b}_2 = \begin{bmatrix}1(1) + (-3)(-6) + 5(0) \\ 3(1) + 1(-6) + 4(0)\end{bmatrix} = \begin{bmatrix}1 + 18 + 0 \\ 3 - 6 + 0\end{bmatrix} = \begin{bmatrix}19 \\ -3\end{bmatrix}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-22-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-22-5">Therefore: <span class="process-math">\(AB = \begin{bmatrix}6 &amp; 19 \\ 9 &amp; -3\end{bmatrix}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-22-5" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.3.2.1"><a href="#ch2-answer-22" title="Copy heading and permalink for Solution 2.3.2.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.3.2"><a href="#ch2-example-45" title="Copy heading and permalink for Example 2.3.2">🔗</a></div></article><article class="example example-like" id="ch2-example-46"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.3.3</span><span class="period">.</span>
+</h3>
+<div class="para" id="ch2-example-46-1-1">Let <span class="process-math">\(A\)</span> be <span class="process-math">\(m\times n\)</span> and <span class="process-math">\(B\)</span> be <span class="process-math">\(n\times k\text{,}\)</span> and build the induced matrix representations <span class="process-math">\(T_A:\mathbb{R}^n\to \mathbb{R}^m\text{,}\)</span> and <span class="process-math">\(T_B:\mathbb{R}^k\to\mathbb{R}^n\text{,}\)</span> and consider the composite of <span class="process-math">\(T_A\)</span> and <span class="process-math">\(T_B\text{:}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-46-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para logical" id="ch2-example-46-1-2">
+<div class="displaymath process-math">
+\begin{equation*}
+(T_A\circ T_B):\mathbb{R}^k\to \mathbb{R}^m\; \text{via}\; (T_A\circ T_B)\mathbf{x}=T_A(T_B(\mathbf{x})).
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-46-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-example-46-1-3">Compute <span class="process-math">\((T_A\circ T_B)\mathbf{x}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-46-1-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-23" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-23-1">Let <span class="process-math">\(\mathbf{x}=\begin{bmatrix}x_1\\\vdots\\x_k\end{bmatrix}\text{.}\)</span> By the definition of matrix-vector product:<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-23-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-23-2">
+<span class="process-math">\(B\mathbf{x} = x_1\mathbf{b}_1 + \cdots + x_k\mathbf{b}_k\text{,}\)</span> where <span class="process-math">\(\mathbf{b}_j\)</span> is column <span class="process-math">\(j\)</span> of <span class="process-math">\(B\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-23-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="ch2-answer-23-3">
+<div class="para">Therefore:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned} (T_A\circ T_B)\mathbf{x} &amp;= T_A(T_B(\mathbf{x})) = T_A(B\mathbf{x}) \\ &amp;= T_A(x_1\mathbf{b}_1 + \cdots + x_k\mathbf{b}_k) \\ &amp;= x_1T_A(\mathbf{b}_1) + \cdots + x_kT_A(\mathbf{b}_k) \quad\text{(by linearity)} \\ &amp;= x_1A\mathbf{b}_1 + \cdots + x_kA\mathbf{b}_k \\ &amp;= \begin{bmatrix}A\mathbf{b}_1 &amp; \cdots &amp; A\mathbf{b}_k\end{bmatrix}\begin{bmatrix}x_1\\\vdots\\x_k\end{bmatrix} \\ &amp;= (AB)\mathbf{x} \quad\text{(by definition of matrix product)} \\ &amp;= T_{AB}\mathbf{x} \end{aligned}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-23-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.3.3.1"><a href="#ch2-answer-23" title="Copy heading and permalink for Solution 2.3.3.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.3.3"><a href="#ch2-example-46" title="Copy heading and permalink for Example 2.3.3">🔗</a></div></article><article class="fact theorem-like" id="ch2-fact-47"><h3 class="heading">
+<span class="type">Fact</span><span class="space"> </span><span class="codenumber">2.3.4</span><span class="period">.</span>
+</h3>
+<div class="para" id="ch2-fact-47-1-1">If <span class="process-math">\(A\)</span> is <span class="process-math">\(m\times n\)</span> and <span class="process-math">\(B\)</span> is <span class="process-math">\(n\times k\text{,}\)</span> then the composite of their induced matrix transformations is another matrix transformation: <span class="process-math">\(T_A\circ T_B=T_{AB}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-fact-47-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Fact 2.3.4"><a href="#ch2-fact-47" title="Copy heading and permalink for Fact 2.3.4">🔗</a></div></article><section class="paragraphs" id="section-2-3-9"><h3 class="heading"><span class="title">Dot Product Definition of Matrix Product.</span></h3>
+<div class="para" id="section-2-3-9-2">As with matrix-vector products, we have another way to compute matrix products via the dot product:<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-9-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="theorem theorem-like" id="ch2-theorem-48"><h4 class="heading">
+<span class="type">Theorem</span><span class="space"> </span><span class="codenumber">2.3.5</span><span class="period">.</span>
+</h4>
+<div class="para" id="ch2-theorem-48-1-1">Let <span class="process-math">\(A\)</span> be an <span class="process-math">\(m\times n\)</span> matrix, <span class="process-math">\(B\)</span> be an <span class="process-math">\(n\times k\)</span> matrix. The <span class="process-math">\((i,j)\)</span> entry of <span class="process-math">\(AB\)</span> is the dot product of row <span class="process-math">\(i\)</span> of <span class="process-math">\(A\)</span> with column <span class="process-math">\(j\)</span> of <span class="process-math">\(B\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-48-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para logical" id="ch2-theorem-48-1-2">
+<div class="para">This process is shown in the schematic below:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\left[\begin{array}{rrrr} {a_{11}} &amp; {a_{12}} &amp; \cdots &amp; {a_{1n}} \\ {a_{21}} &amp; {a_{22}} &amp; \cdots &amp; {a_{2n}}\\ \vdots &amp; \vdots &amp; &amp; \vdots \\ a_{i1} &amp; a_{i2} &amp; \cdots &amp; a_{in} \\ \vdots &amp; \vdots &amp; &amp; \vdots \\ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \end{array} \right] \left[\begin{array}{rrrrrr} {b_{11}} &amp; {b_{12}} &amp; \cdots &amp; b_{1j} &amp; \cdots &amp; {b_{1k}} \\ {b_{21}} &amp; {b_{22}} &amp; \cdots &amp; {b_{2j}} &amp; \cdots &amp; {b_{2k}} \\ \vdots &amp; \vdots &amp; &amp; \vdots &amp; &amp; \vdots \\ b_{n1} &amp; b_{n2} &amp; \cdots &amp; b_{nj} &amp; \cdots &amp; b_{nk} \end{array} \right] = \left[\begin{array}{rrrr} {c_{11}} &amp; {c_{12}} &amp; \cdots &amp; {c_{1k}} \\ {c_{21}} &amp; {c_{22}} &amp; \cdots &amp; {c_{2k}} \\ \vdots &amp; \vdots &amp; {c_{ij}}&amp; \vdots \\ c_{m1} &amp; c_{m2} &amp; \cdots &amp; c_{mk} \end{array} \right]
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-48-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-theorem-48-1-3">where <span class="process-math">\(c_{ij} = \sum_{\ell=1}^{n} a_{i\ell} b_{\ell,j}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-48-1-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <figure class="figure figure-like" id="ch2-theorem-48-1-4"><div class="image-box" style="width: 58%; margin-left: 21%; margin-right: 21%;"><img src="external/chapter-2/AB-dotproduct.png" class="contained" alt="The entry in row i and column j of AB is the dot product of row i of A with column j of B. The selected row, column, and resulting entry are highlighted."></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.3.6<span class="period">.</span></span><span class="space"> </span>From Linear Algebra with Applications, Vretta-Lyryx<div class="autopermalink" data-description="Figure 2.3.6"><a href="#ch2-theorem-48-1-4" title="Copy heading and permalink for Figure 2.3.6">🔗</a></div></figcaption></figure><div class="autopermalink" data-description="Theorem 2.3.5"><a href="#ch2-theorem-48" title="Copy heading and permalink for Theorem 2.3.5">🔗</a></div></article><article class="question example-like" id="ch2-question-49"><h4 class="heading">
+<span class="type">Question</span><span class="space"> </span><span class="codenumber">2.3.7</span><span class="period">.</span>
+</h4>
+<div class="para" id="ch2-question-49-1">When is the product of two matrices <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> defined? What is the size of the product <span class="process-math">\(AB\text{?}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-question-49-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Question 2.3.7"><a href="#ch2-question-49" title="Copy heading and permalink for Question 2.3.7">🔗</a></div></article><article class="activity project-like" id="ch2-activity-50"><h4 class="heading">
+<span class="type">Activity</span><span class="space"> </span><span class="codenumber">2.3.1</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="ch2-activity-50-1-1">
+<div class="para">Let</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A = \left[ \begin{array}{rrr} -3 &amp; -4 &amp; 1 \\ 2 &amp; 4 &amp; 0 \\ 1 &amp; -4 &amp; -5 \\ \end{array}\right] \text{ and } B = \left[ \begin{array}{rrr} -1 &amp; 2 &amp; -4 \\ -4 &amp; -3 &amp; -1 \\ 4 &amp; 3 &amp; 1 \end{array} \right].
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-50-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-activity-50-1-2">What is the <span class="process-math">\((2,3)\)</span> entry of <span class="process-math">\(AB\text{?}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-50-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-24" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-24-1">
+<span class="process-math">\(\text{Row 2 } \cdot \text{ Column 3: }\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-24-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-24-2">
+<span class="process-math">\((2)(-4) + (4)(-1) + (0)(1) = -8 - 4 + 0 = -12\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-24-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.3.1.1"><a href="#ch2-answer-24" title="Copy heading and permalink for Solution 2.3.1.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Activity 2.3.1"><a href="#ch2-activity-50" title="Copy heading and permalink for Activity 2.3.1">🔗</a></div></article><div class="autopermalink" data-description="Paragraphs: Dot Product Definition of Matrix Product"><a href="#section-2-3-9" title="Copy heading and permalink for Paragraphs: Dot Product Definition of Matrix Product">🔗</a></div></section><section class="paragraphs" id="section-2-3-10"><h3 class="heading"><span class="title">Properties of Matrix Multiplication.</span></h3>
+<div class="para" id="section-2-3-10-2">Assume that <span class="process-math">\(A,B,C\)</span> are matrices of appropriate sizes. Then:<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="section-2-3-10-3">
+<ol class="lower-alpha ol-marker-2" id="section-2-3-10-3-1">
+<li id="section-2-3-10-3-1-1">
+<div class="para" id="section-2-3-10-3-1-1-1">
+<span class="process-math">\(A(BC)=\underline{(AB)C}\text{,}\)</span> i.e. matrix multiplication is <em class="emphasis">associative</em>.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-3-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item a"><a href="#section-2-3-10-3-1-1" title="Copy heading and permalink for Item a">🔗</a></div>
+</li>
+<li id="section-2-3-10-3-1-2">
+<div class="para" id="section-2-3-10-3-1-2-1">
+<span class="process-math">\((A+B)C=\underline{AC + BC}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-3-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item b"><a href="#section-2-3-10-3-1-2" title="Copy heading and permalink for Item b">🔗</a></div>
+</li>
+<li id="section-2-3-10-3-1-3">
+<div class="para" id="section-2-3-10-3-1-3-1">
+<span class="process-math">\(C(A+B)=\underline{CA + CB}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-3-1-3-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item c"><a href="#section-2-3-10-3-1-3" title="Copy heading and permalink for Item c">🔗</a></div>
+</li>
+<li id="section-2-3-10-3-1-4">
+<div class="para" id="section-2-3-10-3-1-4-1">
+<span class="process-math">\(A(rB)=\underline{r(AB)}=\underline{(rA)B}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-3-1-4-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item d"><a href="#section-2-3-10-3-1-4" title="Copy heading and permalink for Item d">🔗</a></div>
+</li>
+<li id="section-2-3-10-3-1-5">
+<div class="para" id="section-2-3-10-3-1-5-1">
+<span class="process-math">\(\displaystyle (AB)^T=\underline{B^TA^T}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-3-1-5-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item e"><a href="#section-2-3-10-3-1-5" title="Copy heading and permalink for Item e">🔗</a></div>
+</li>
+</ol>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<details id="ch2-answer-25" class="hiddenproof born-hidden-knowl"><summary class="knowl__link"><h4 class="heading"><span class="title">Proof of (d) (if time).</span></h4></summary><article class="hiddenproof knowl__content"><div class="para" id="ch2-answer-25-2">Let <span class="process-math">\(A\)</span> be an <span class="process-math">\(m \times n\)</span> matrix and <span class="process-math">\(B\)</span> be an <span class="process-math">\(n \times k\)</span> matrix. Then:<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-25-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-25-3">
+<span class="process-math">\(A(rB) = A[rb_{ij}] = [\sum_{j=1}^n a_{ij} (rb_{jk})] = r[\sum_{j=1}^n a_{ij}b_{jk}] = r(AB)\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-25-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-25-4">Similarly, <span class="process-math">\((rA)B = [ra_{ij}][b_{jk}] = [\sum_{j=1}^n (r a_{ij}) b_{jk}] = r[\sum_{j=1}^n a_{ij}b_{jk}] = r(AB)\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-25-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Proof 1: Proof of (d) (if time)"><a href="#ch2-answer-25" title="Copy heading and permalink for Proof 1: Proof of (d) (if time)">🔗</a></div></article></details><article class="assemblage assemblage-like" id="section-2-3-10-5"><div class="para" id="section-2-3-10-5-1">
+<em class="emphasis">Facts and Warnings about Matrix Multiplication</em>: Let <span class="process-math">\(A\)</span> be an <span class="process-math">\(m \times p\)</span> matrix and <span class="process-math">\(B\)</span> be a <span class="process-math">\(p \times n\)</span> matrix, so that their product <span class="process-math">\(AB\)</span> is defined and is a <em class="emphasis"><span class="process-math">\(m \times n\)</span></em> matrix.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-5-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="section-2-3-10-5-2">
+<ol class="decimal ol-marker-1" id="section-2-3-10-5-2-1">
+<li id="section-2-3-10-5-2-1-1">
+<div class="para" id="section-2-3-10-5-2-1-1-1">The product <span class="process-math">\(BA\)</span> may not be defined!<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-5-2-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 1"><a href="#section-2-3-10-5-2-1-1" title="Copy heading and permalink for Item 1">🔗</a></div>
+</li>
+<li id="section-2-3-10-5-2-1-2">
+<div class="para" id="section-2-3-10-5-2-1-2-1">If <span class="process-math">\(BA\)</span> is also defined, the size of <span class="process-math">\(AB\)</span> and <span class="process-math">\(BA\)</span> may be the same or different.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-5-2-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 2"><a href="#section-2-3-10-5-2-1-2" title="Copy heading and permalink for Item 2">🔗</a></div>
+</li>
+<li id="section-2-3-10-5-2-1-3">
+<div class="para" id="section-2-3-10-5-2-1-3-1">In the case where <span class="process-math">\(AB\)</span> and <span class="process-math">\(BA\)</span> are the same size, <span class="process-math">\(AB\)</span> and <span class="process-math">\(BA\)</span> may be equal or they may be different.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-5-2-1-3-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 3"><a href="#section-2-3-10-5-2-1-3" title="Copy heading and permalink for Item 3">🔗</a></div>
+</li>
+</ol>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-10-5-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Assemblage"><a href="#section-2-3-10-5" title="Copy heading and permalink for Assemblage">🔗</a></div></article><article class="example example-like" id="ch2-example-51"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.3.8</span><span class="period">.</span>
+</h4>
+<div class="para" id="ch2-example-51-1-1">Let <span class="process-math">\(A = {\left[ \begin{array}{rr} 0 &amp; -1 \\ -1 &amp; 5 \end{array} \right]} \text{ and } B = {\left[ \begin{array}{rr} 3 &amp; 3 \\ -4 &amp; -3 \end{array} \right]}.\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-51-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-example-51-1-2">Calculate and compare <span class="process-math">\(AB\)</span> and <span class="process-math">\(BA\text{,}\)</span> if they are defined.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-51-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-26" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para logical" id="ch2-answer-26-1">
+<div class="displaymath process-math">
+\begin{equation*}
+AB = \begin{bmatrix} 4 &amp; 3 \\ -23 &amp; -18 \end{bmatrix}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-26-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="ch2-answer-26-2">
+<div class="displaymath process-math">
+\begin{equation*}
+BA = \begin{bmatrix} -3 &amp; 12 \\ 3 &amp; -11 \end{bmatrix}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-26-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-26-3">The products <span class="process-math">\(AB\)</span> and <span class="process-math">\(BA\)</span> exist but are not equal.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-26-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.3.8.1"><a href="#ch2-answer-26" title="Copy heading and permalink for Solution 2.3.8.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.3.8"><a href="#ch2-example-51" title="Copy heading and permalink for Example 2.3.8">🔗</a></div></article><article class="activity project-like" id="ch2-activity-52"><h4 class="heading">
+<span class="type">Activity</span><span class="space"> </span><span class="codenumber">2.3.2</span><span class="period">.</span>
+</h4>
+<article class="task exercise-like" id="ch2-activity-52-part-1"><h5 class="heading"><span class="codenumber">(a)</span></h5>
+<div class="para logical" id="ch2-activity-52-part-1-1-1">
+<div class="para">Consider the following matrices:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A = \begin{bmatrix}1 &amp; 2 &amp; 3\\4 &amp; 5 &amp; 6\end{bmatrix}, \quad B = \begin{bmatrix}1 &amp; 2\\3 &amp; 4\\5 &amp; 6\end{bmatrix}, \quad C = \begin{bmatrix}1 &amp; 2\\3 &amp; 4\end{bmatrix}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-52-part-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-activity-52-part-1-1-2">For each of the following products, determine (i) whether the product is defined, and (ii) if defined, what is the size of the resulting matrix.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-52-part-1-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-activity-52-part-1-1-3">
+<span class="process-math">\(AB\)</span> and <span class="process-math">\(BA\text{:}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-52-part-1-1-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-27" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-27-1">For <span class="process-math">\(AB\text{:}\)</span> Matrix <span class="process-math">\(A\)</span> is <span class="process-math">\(2\times 3\)</span> and matrix <span class="process-math">\(B\)</span> is <span class="process-math">\(3\times 2\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="ch2-answer-27-2">
+<ul class="disc" id="ch2-answer-27-2-1">
+<li id="ch2-answer-27-2-1-1">
+<div class="para" id="ch2-answer-27-2-1-1-1">
+<span class="process-math">\(AB\)</span> is defined because the number of columns of <span class="process-math">\(A\)</span> (3) equals the number of rows of <span class="process-math">\(B\)</span> (3)<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-2-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#ch2-answer-27-2-1-1" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="ch2-answer-27-2-1-2">
+<div class="para" id="ch2-answer-27-2-1-2-1">The resulting matrix will be <span class="process-math">\(2\times 2\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-2-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#ch2-answer-27-2-1-2" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-27-3">For <span class="process-math">\(BA\text{:}\)</span> Matrix <span class="process-math">\(B\)</span> is <span class="process-math">\(3\times 2\)</span> and matrix <span class="process-math">\(A\)</span> is <span class="process-math">\(2\times 3\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="ch2-answer-27-4">
+<ul class="disc" id="ch2-answer-27-4-1">
+<li id="ch2-answer-27-4-1-1">
+<div class="para" id="ch2-answer-27-4-1-1-1">
+<span class="process-math">\(BA\)</span> is defined because the number of columns of <span class="process-math">\(B\)</span> (2) equals the number of rows of <span class="process-math">\(A\)</span> (2)<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-4-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#ch2-answer-27-4-1-1" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="ch2-answer-27-4-1-2">
+<div class="para" id="ch2-answer-27-4-1-2-1">The resulting matrix will be <span class="process-math">\(3\times 3\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-4-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#ch2-answer-27-4-1-2" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-27-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.3.2.a.1"><a href="#ch2-answer-27" title="Copy heading and permalink for Solution 2.3.2.a.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Task 2.3.2.a"><a href="#ch2-activity-52-part-1" title="Copy heading and permalink for Task 2.3.2.a">🔗</a></div></article><article class="task exercise-like" id="ch2-activity-52-part-2"><h5 class="heading"><span class="codenumber">(b)</span></h5>
+<div class="para" id="ch2-activity-52-part-2-1-1">
+<span class="process-math">\(BC\)</span> and <span class="process-math">\(CB\text{:}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-52-part-2-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-28" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-28-1">For <span class="process-math">\(BC\text{:}\)</span> Matrix <span class="process-math">\(B\)</span> is <span class="process-math">\(3\times 2\)</span> and matrix <span class="process-math">\(C\)</span> is <span class="process-math">\(2\times 2\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-28-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="ch2-answer-28-2">
+<ul class="disc" id="ch2-answer-28-2-1">
+<li id="ch2-answer-28-2-1-1">
+<div class="para" id="ch2-answer-28-2-1-1-1">
+<span class="process-math">\(BC\)</span> is defined because the number of columns of <span class="process-math">\(B\)</span> (2) equals the number of rows of <span class="process-math">\(C\)</span> (2)<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-28-2-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#ch2-answer-28-2-1-1" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="ch2-answer-28-2-1-2">
+<div class="para" id="ch2-answer-28-2-1-2-1">The resulting matrix will be <span class="process-math">\(3\times 2\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-28-2-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#ch2-answer-28-2-1-2" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-28-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-28-3">For <span class="process-math">\(CB\text{:}\)</span> Matrix <span class="process-math">\(C\)</span> is <span class="process-math">\(2\times 2\)</span> and matrix <span class="process-math">\(B\)</span> is <span class="process-math">\(3\times 2\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-28-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="ch2-answer-28-4">
+<ul class="disc" id="ch2-answer-28-4-1"><li id="ch2-answer-28-4-1-1">
+<div class="para" id="ch2-answer-28-4-1-1-1">
+<span class="process-math">\(CB\)</span> is not defined because the number of columns of <span class="process-math">\(C\)</span> (2) does not equal the number of rows of <span class="process-math">\(B\)</span> (3)<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-28-4-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#ch2-answer-28-4-1-1" title="Copy heading and permalink for Item">🔗</a></div>
+</li></ul>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-28-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.3.2.b.1"><a href="#ch2-answer-28" title="Copy heading and permalink for Solution 2.3.2.b.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Task 2.3.2.b"><a href="#ch2-activity-52-part-2" title="Copy heading and permalink for Task 2.3.2.b">🔗</a></div></article><div class="conclusion" id="ch2-activity-52-3"><div class="para logical" id="ch2-activity-52-3-1">
+<div class="para">
+<em class="emphasis">Key property of identity matrices</em> If <span class="process-math">\(A\)</span> is any <span class="process-math">\({m \times n}\)</span> matrix, then</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A I_n = A \text{ and } I_m A = A.
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-52-3-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div></div>
+<div class="autopermalink" data-description="Activity 2.3.2"><a href="#ch2-activity-52" title="Copy heading and permalink for Activity 2.3.2">🔗</a></div></article><div class="autopermalink" data-description="Paragraphs: Properties of Matrix Multiplication"><a href="#section-2-3-10" title="Copy heading and permalink for Paragraphs: Properties of Matrix Multiplication">🔗</a></div></section><section class="paragraphs" id="section-2-3-11"><h3 class="heading"><span class="title">Matrix Powers.</span></h3>
+<div class="para logical" id="section-2-3-11-2">
+<div class="para">Using the definition of matrix multiplication, we can also define the powers of square matrices. Let <span class="process-math">\(A\)</span> be a square matrix. Then</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A^2 = \underline{A A}, \quad A^3 = \underline{A A A}, \quad \text{etc.}
+\end{equation*}
+</div>
+<div class="para">We make the convention that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A^0 = \underline{I}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-11-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="section-2-3-11-3">
+<div class="para">If <span class="process-math">\(p\)</span> and <span class="process-math">\(q\)</span> are nonnegative integers, then</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A^pA^q = \underline{A^{p+q}} \text{ and } (A^p)^q = \underline{A^{pq}}.
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-11-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-3-11-4">
+<em class="emphasis">Warning!</em> It is not necessarily the case that <span class="process-math">\((AB)^p = A^pB^p\text{.}\)</span> Why?<div class="autopermalink" data-description="Paragraph"><a href="#section-2-3-11-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Paragraphs: Matrix Powers"><a href="#section-2-3-11" title="Copy heading and permalink for Paragraphs: Matrix Powers">🔗</a></div></section><div class="autopermalink" data-description="Section 2.3: Matrix Multiplication"><a href="#section-2-3" title="Copy heading and permalink for Section 2.3: Matrix Multiplication">🔗</a></div></section></div>
+<div id="ptx-content-footer" class="ptx-content-footer">
+<a class="previous-button button" href="section-2-2.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="section-2-6.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="338 3000 8772 6866" role="img"><title>PreTeXt logo</title><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png" alt="Runstone Academy logo"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png" alt="MathJax logo"></a>
+</div>
+</body>
+</html>

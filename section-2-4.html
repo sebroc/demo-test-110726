@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<!--******************************************-->
+<!--*  Authored with PreTeXt                 *-->
+<!--*  pretextbook.org                       *-->
+<!--*  Theme: default-modern                 *-->
+<!--*  Palette:                              *-->
+<!--******************************************-->
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Matrix Inverses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<link href="_static/pretext/css/ol-markers.css" rel="stylesheet" type="text/css">
+<script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
+  },
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math"
+  },
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
+  },
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "_static/pretext/js/lib"
+    }
+  },
+  "startup": {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  }
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Linear Algebra Lecture Notes">
+<meta property="book:author" content="Phillipson and Roch">
+<script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '8.4.0';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.7e2ee203f2ecd6c8.bundle.js"></script><script src="_static/prefix-23.7d27cb317c36911a.bundle.js"></script><script src="_static/prefix-runestone.35a40fea06647cf2.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-runestone.7062ede5334282a6.css">
+<script src="_static/pretext/js/lti_iframe_resizer.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script>
+</head>
+<body class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner"><div class="title-container">
+<h1 class="heading"><a href="math345-notes.html"><span class="title">Linear Algebra Lecture Notes</span> <span class="subtitle">Math 345 · Chapters 1–3 and 6</span></a></h1>
+<p class="byline">Phillipson and Roch</p>
+</div></div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
+</div>
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="section-2-6.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="chapter-2.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="chapter-3.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter">
+<div class="toc-title-box"><a href="math345-notes-3.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-preface"><div class="toc-title-box"><a href="about.html" class="internal"><span class="title">About these notes</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-1.html" class="internal"><span class="codenumber">1</span> <span class="title">Systems of Linear Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-1-1.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Solutions and Elementary Operations</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-1-2.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Gaussian Elimination</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-1-3.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Homogeneous Equations</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="chapter-2.html" class="internal"><span class="codenumber">2</span> <span class="title">Matrix Algebra</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-1.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Matrix Addition, Scalar Multiplication, and Transposition</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-2.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Matrix-Vector Multiplication</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-3.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Matrix Multiplication</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-2-6.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Linear Transformations</span></a></div></li>
+<li class="toc-item toc-section active"><div class="toc-title-box"><a href="section-2-4.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Matrix Inverses</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-3.html" class="internal"><span class="codenumber">3</span> <span class="title">Determinants (and Diagonalization)</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-3-1.html" class="internal"><span class="codenumber">3.1</span> <span class="title">The Cofactor Expansion</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="section-3-2.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Determinants and Matrix Inverses</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="chapter-6.html" class="internal"><span class="codenumber">4</span> <span class="title">Vector Spaces (Textbook Chapter 6)</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-section"><div class="toc-title-box"><a href="section-6-1.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Examples and Basic Properties</span></a></div></li></ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="section-2-4"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">2.5</span><span class="space"> </span><span class="title">Matrix Inverses</span>
+</h2>
+<div class="para" id="section-2-4-2">
+<em class="emphasis">Textbook section 2.4.</em><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="definition definition-like" id="ch2-definition-62"><h3 class="heading">
+<span class="type">Definition</span><span class="space"> </span><span class="codenumber">2.5.1</span><span class="period">.</span>
+</h3>
+<div class="para" id="ch2-definition-62-1-1">An <span class="process-math">\({n \times n}\)</span> matrix <span class="process-math">\(A\)</span> is called <em class="emphasis">nonsingular</em>, or <em class="emphasis">invertible</em>, if there exists an <span class="process-math">\({n \times n}\)</span> matrix <span class="process-math">\(B\)</span> such that <em class="emphasis"><span class="process-math">\(AB = BA = I_n\)</span></em>. Such a <span class="process-math">\(B\)</span> is called the <em class="emphasis">inverse</em> of <span class="process-math">\(A\text{.}\)</span> If no such <span class="process-math">\(B\)</span> exists, <span class="process-math">\(A\)</span> is called <em class="emphasis">singular</em> or <em class="emphasis">noninvertible</em>.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-definition-62-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-definition-62-1-2">
+<em class="emphasis">Idea</em>: The inverse of a matrix mimics the reciprocal of a real number.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-definition-62-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Definition 2.5.1"><a href="#ch2-definition-62" title="Copy heading and permalink for Definition 2.5.1">🔗</a></div></article><article class="example example-like" id="ch2-example-63"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.2</span><span class="period">.</span>
+</h3>
+<div class="para" id="ch2-example-63-1-1">Let <span class="process-math">\(A = {\left[ \begin{array}{rr} 1 &amp; 3 \\ 1 &amp; 4 \end{array} \right]}\)</span> and <span class="process-math">\(B = {\left[ \begin{array}{rr} 4 &amp; -3 \\ -1 &amp; 1 \end{array} \right]}\text{.}\)</span> Compute both <span class="process-math">\(AB\)</span> and <span class="process-math">\(BA\text{,}\)</span> and make a conclusion using the language of inverses.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-63-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-38" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para logical" id="ch2-answer-38-1">
+<div class="displaymath process-math">
+\begin{equation*}
+AB = \left[\begin{array}{cc} 1 &amp; 0 \\ 0 &amp; 1 \end{array}\right] = I_2 \quad\text{and}\quad BA = \left[\begin{array}{cc} 1 &amp; 0 \\ 0 &amp; 1 \end{array}\right] = I_2
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-38-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-38-2">
+<span class="process-math">\(\text{Therefore, } B \text{ is the inverse of } A.\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-38-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.2.1"><a href="#ch2-answer-38" title="Copy heading and permalink for Solution 2.5.2.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.5.2"><a href="#ch2-example-63" title="Copy heading and permalink for Example 2.5.2">🔗</a></div></article><div class="para" id="section-2-4-5">
+<em class="emphasis">Fact:</em> The inverse of a matrix, if it exists, is unique. Therefore, we can write <em class="emphasis"><span class="process-math">\(A^{-1}\)</span></em> for the inverse of <span class="process-math">\(A\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-5" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-4-6">
+<em class="emphasis">Fact:</em> If <span class="process-math">\(AB = I_n\text{,}\)</span> then <span class="process-math">\(BA = I_n\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-6" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="example example-like" id="ch2-example-64"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.3</span><span class="period">.</span>
+</h3>
+<div class="para" id="ch2-example-64-1-1">Does <span class="process-math">\(A=\begin{bmatrix} 2 &amp; 1 \\ 0 &amp; 0 \end{bmatrix}\)</span> have an inverse?<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-64-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-39" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para logical" id="ch2-answer-39-1">
+<div class="para">Let’s suppose <span class="process-math">\(A\)</span> had an inverse <span class="process-math">\(B = \begin{bmatrix} x &amp; y \\ z &amp; w \end{bmatrix}\text{.}\)</span> Then:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned} AB &amp;= I_2\\[5pt] \begin{bmatrix} 2 &amp; 1 \\ 0 &amp; 0 \end{bmatrix}\begin{bmatrix} x &amp; y \\ z &amp; w \end{bmatrix} &amp;= \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix} \end{aligned}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-39-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="ch2-answer-39-2">
+<div class="para">This gives us the system of equations:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned} 2x + z &amp;= 1\\ 2y + w &amp;= 0\\ 0x + 0z &amp;= 0\\ 0y + 0w &amp;= 1 \end{aligned}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-39-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-39-3">The last equation states that <span class="process-math">\(0 = 1\text{,}\)</span> which is impossible.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-39-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-39-4">Therefore, <span class="process-math">\(A\)</span> cannot have an inverse. This means <span class="process-math">\(A\)</span> is singular.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-39-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.3.1"><a href="#ch2-answer-39" title="Copy heading and permalink for Solution 2.5.3.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.5.3"><a href="#ch2-example-64" title="Copy heading and permalink for Example 2.5.3">🔗</a></div></article><div class="para" id="section-2-4-8">
+<em class="emphasis">Theorem:</em> If both <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> are nonsingular <span class="process-math">\({n \times n}\)</span> matrices, then the matrix <span class="process-math">\(AB\)</span> is <em class="emphasis">nonsingular</em> and its inverse is <span class="process-math">\((AB){^{-1}}=\)</span><em class="emphasis"><span class="process-math">\(B^{-1} A^{-1}\)</span></em>.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-8" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<details id="ch2-answer-40" class="hiddenproof born-hidden-knowl"><summary class="knowl__link"><h3 class="heading"><span class="title">Proof.</span></h3></summary><article class="hiddenproof knowl__content"><div class="para" id="ch2-answer-40-2">First, <span class="process-math">\((AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = A I_n A^{-1} = AA^{-1} = I_n\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-40-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-40-3">Similarly, <span class="process-math">\((B^{-1}A^{-1})(AB) = B^{-1}(A^{-1}A)B = B^{-1} I_n B = B^{-1}B = I_n\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-40-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Proof 2.5.1: Proof"><a href="#ch2-answer-40" title="Copy heading and permalink for Proof 2.5.1: Proof">🔗</a></div></article></details><div class="para" id="section-2-4-10">Follow up facts:<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-10" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="section-2-4-11">
+<ul class="disc" id="section-2-4-11-1">
+<li id="section-2-4-11-1-1">
+<div class="para" id="section-2-4-11-1-1-1">If <span class="process-math">\(A_1, A_2,\ldots, A_k\)</span> are <span class="process-math">\(n\times n\)</span> invertible/nonsingular matrices, then <span class="process-math">\(A_1A_2\cdots A_k\)</span> is invertible/nonsingular and <span class="process-math">\((A_1A_2\cdots A_k)^{-1}=\underline{A_k^{-1}\cdots A_2^{-1} A_1^{-1}}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-11-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#section-2-4-11-1-1" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="section-2-4-11-1-2">
+<div class="para" id="section-2-4-11-1-2-1">If <span class="process-math">\(A\)</span> is invertible/nonsingular, then <span class="process-math">\(A^{-1}\)</span> is invertible/nonsingular and <span class="process-math">\((A^{-1})^{-1}=\underline{A}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-11-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#section-2-4-11-1-2" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="section-2-4-11-1-3">
+<div class="para" id="section-2-4-11-1-3-1">If <span class="process-math">\(A\)</span> is invertible/nonsingular, then <span class="process-math">\(A^T\)</span> is invertible/nonsingular and <span class="process-math">\((A^{-1})^T=\underline{(A^T)^{-1}}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-11-1-3-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#section-2-4-11-1-3" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-11" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="theorem theorem-like" id="ch2-theorem-65"><h3 class="heading">
+<span class="type">Theorem</span><span class="space"> </span><span class="codenumber">2.5.4</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="ch2-theorem-65-1-1">
+<div class="para">(Inverse of <span class="process-math">\(2\times 2\)</span> matrix) The <span class="process-math">\(2\times 2\)</span> matrix</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A=\begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}
+\end{equation*}
+</div>
+<div class="para">is invertible if and only if <span class="process-math">\(ad-bc\neq 0\text{,}\)</span> in which case</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-65-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para logical" id="ch2-theorem-65-1-2">
+<div class="displaymath process-math">
+\begin{equation*}
+A^{-1}=\dfrac{1}{ad-bc}\begin{bmatrix} d &amp; -b \\ -c &amp; a \end{bmatrix}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-65-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-theorem-65-1-3">We’ll learn how to compute inverses for bigger matrices soon.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-65-1-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Theorem 2.5.4"><a href="#ch2-theorem-65" title="Copy heading and permalink for Theorem 2.5.4">🔗</a></div></article><article class="activity project-like" id="ch2-activity-66"><h3 class="heading">
+<span class="type">Activity</span><span class="space"> </span><span class="codenumber">2.5.1</span><span class="period">.</span>
+</h3>
+<div class="para" id="ch2-activity-66-1-1">Find the inverse of each matrix, if possible.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-66-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para logical" id="ch2-activity-66-1-2">
+<div class="displaymath process-math">
+\begin{equation*}
+A=\begin{bmatrix} -2 &amp; -3 \\ 4 &amp; 6 \end{bmatrix},\; B=\begin{bmatrix} 1 &amp; 6 \\ 2 &amp; 3 \end{bmatrix}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-activity-66-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-41" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-41-1">For <span class="process-math">\(A\text{:}\)</span> <span class="process-math">\(\det(A) = (-2)(6) - (-3)(4) = -12 - (-12) = 0\text{,}\)</span> so <span class="process-math">\(A\)</span> is not invertible.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-41-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-41-2">For <span class="process-math">\(B\text{:}\)</span> <span class="process-math">\(\det(B) = (1)(3) - (6)(2) = 3 - 12 = -9 \neq 0\text{,}\)</span> so <span class="process-math">\(B^{-1} = \frac{1}{-9}{\left[ \begin{array}{rr} 3 &amp; -6 \\ -2 &amp; 1 \end{array} \right]} = {\left[ \begin{array}{rr} -1/3 &amp; 2/3 \\ 2/9 &amp; -1/9 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-41-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.1.1"><a href="#ch2-answer-41" title="Copy heading and permalink for Solution 2.5.1.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Activity 2.5.1"><a href="#ch2-activity-66" title="Copy heading and permalink for Activity 2.5.1">🔗</a></div></article><section class="paragraphs" id="section-2-4-14"><h3 class="heading"><span class="title">Linear Systems and Inverses.</span></h3>
+<div class="para" id="section-2-4-14-2">If <span class="process-math">\(A\)</span> is an <span class="process-math">\({n \times n}\)</span> matrix, then the linear system <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\)</span> is a system of <em class="emphasis"><span class="process-math">\(n\)</span></em> equations in <em class="emphasis"><span class="process-math">\(n\)</span></em> unknowns. Suppose <span class="process-math">\(A\)</span> is nonsingular. How can we use <span class="process-math">\({A^{-1}}\)</span> to solve the system <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\text{?}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-14-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="assemblage assemblage-like" id="ch2-answer-42"><h4 class="heading"><span class="title">Solution.</span></h4>
+<div class="para logical" id="ch2-answer-42-2">
+<div class="para">Multiply both sides of <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\)</span> by <span class="process-math">\({A^{-1}}\)</span> on the left:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned} A{\mathbf{x}}&amp;= {\mathbf{b}}\\ {A^{-1}}(A{\mathbf{x}}) &amp;= {A^{-1}}{\mathbf{b}}\\ ({A^{-1}}A){\mathbf{x}}&amp;= {A^{-1}}{\mathbf{b}}\\ I_n{\mathbf{x}}&amp;= {A^{-1}}{\mathbf{b}}\\ {\mathbf{x}}&amp;= {A^{-1}}{\mathbf{b}} \end{aligned}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-42-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-42-3">Therefore, when <span class="process-math">\(A\)</span> is nonsingular, <span class="process-math">\({\mathbf{x}}= {A^{-1}}{\mathbf{b}}\)</span> is the solution to <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-42-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Assemblage: Solution"><a href="#ch2-answer-42" title="Copy heading and permalink for Assemblage: Solution">🔗</a></div></article><div class="para" id="section-2-4-14-4">
+<em class="emphasis">Consequences</em>:<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-14-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="section-2-4-14-5">
+<ul class="disc" id="section-2-4-14-5-1">
+<li id="section-2-4-14-5-1-1">
+<div class="para" id="section-2-4-14-5-1-1-1">When <span class="process-math">\({A^{-1}}\)</span> exists, then <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\)</span> has a <em class="emphasis">unique</em> solution.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-14-5-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#section-2-4-14-5-1-1" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="section-2-4-14-5-1-2">
+<div class="para" id="section-2-4-14-5-1-2-1">If <span class="process-math">\(A\)</span> is invertible/nonsingular, then the ONLY solution to the homogeneous system <em class="emphasis"><span class="process-math">\(A{\mathbf{x}}= {\mathbf{0}}\)</span></em> is <span class="process-math">\({\mathbf{x}}=\underline{{\mathbf{0}}}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-14-5-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#section-2-4-14-5-1-2" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-14-5" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="example example-like" id="ch2-example-67"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.5</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="ch2-example-67-1-1">
+<div class="para">Use the inverse of <span class="process-math">\(A\)</span> to solve the linear systems <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\text{,}\)</span> <span class="process-math">\(A{\mathbf{x}}= {{\mathbf{c}}}\text{,}\)</span> and <span class="process-math">\(A{\mathbf{x}}= {\mathbf{0}}\text{,}\)</span> where <span class="process-math">\(A\text{,}\)</span> <span class="process-math">\({\mathbf{b}}\text{,}\)</span> and <span class="process-math">\({{\mathbf{c}}}\)</span> are given below.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A = {\left[ \begin{array}{rr} 1 &amp; 2 \\ 3 &amp; 4 \end{array} \right]}, \quad {A^{-1}}= {\left[ \begin{array}{rr} -2 &amp; 1 \\ \frac{3}{2} &amp; -\frac{1}{2} \end{array} \right]}, \quad {\mathbf{b}}= {\left[ \begin{array}{r} 4 \\ 2 \end{array} \right]}, \ \text{ and } \ {{\mathbf{c}}} = {\left[ \begin{array}{r} 3 \\ 2 \end{array} \right]}.
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-67-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-43" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-43-1">For <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\text{:}\)</span> <span class="process-math">\({\mathbf{x}}= A^{-1}{\mathbf{b}}= {\left[ \begin{array}{rr} -2 &amp; 1 \\ \frac{3}{2} &amp; -\frac{1}{2} \end{array} \right]}{\left[ \begin{array}{r} 4 \\ 2 \end{array} \right]} = {\left[ \begin{array}{r} -6 \\ 5 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-43-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-43-2">For <span class="process-math">\(A{\mathbf{x}}= {\mathbf{c}}\text{:}\)</span> <span class="process-math">\({\mathbf{x}}= A^{-1}{\mathbf{c}}= {\left[ \begin{array}{rr} -2 &amp; 1 \\ \frac{3}{2} &amp; -\frac{1}{2} \end{array} \right]}{\left[ \begin{array}{r} 3 \\ 2 \end{array} \right]} = {\left[ \begin{array}{r} -4 \\ \frac{7}{2} \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-43-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-43-3">For <span class="process-math">\(A{\mathbf{x}}= {\mathbf{0}}\text{:}\)</span> <span class="process-math">\({\mathbf{x}}= A^{-1}{\mathbf{0}}= {\left[ \begin{array}{r} 0 \\ 0 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-43-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.5.1"><a href="#ch2-answer-43" title="Copy heading and permalink for Solution 2.5.5.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.5.5"><a href="#ch2-example-67" title="Copy heading and permalink for Example 2.5.5">🔗</a></div></article><div class="autopermalink" data-description="Paragraphs: Linear Systems and Inverses"><a href="#section-2-4-14" title="Copy heading and permalink for Paragraphs: Linear Systems and Inverses">🔗</a></div></section><section class="paragraphs" id="section-2-4-15"><h3 class="heading"><span class="title">Algorithm for Calculating Inverses.</span></h3>
+<div class="para" id="section-2-4-15-2">For a given <span class="process-math">\(n\times n\)</span> matrix <span class="process-math">\(A\text{,}\)</span> if we are looking for an inverse for <span class="process-math">\(A\)</span> (call this matrix <span class="process-math">\(X\)</span>), we must have <span class="process-math">\(AX=I_n\text{.}\)</span> We are solving <span class="process-math">\(n\)</span> linear systems simultaneously:<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="assemblage assemblage-like" id="ch2-answer-44"><h4 class="heading"><span class="title">Solution.</span></h4>
+<div class="para" id="ch2-answer-44-2">
+<span class="process-math">\(A\begin{bmatrix} x_{11} \\ x_{21} \\ \vdots \\ x_{n1} \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix},\ A\begin{bmatrix} x_{12} \\ x_{22} \\ \vdots \\ x_{n2} \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ \vdots \\ 0 \end{bmatrix},\ \cdots,\ A\begin{bmatrix} x_{1n} \\ x_{2n} \\ \vdots \\ x_{nn} \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{bmatrix}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-44-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Assemblage: Solution"><a href="#ch2-answer-44" title="Copy heading and permalink for Assemblage: Solution">🔗</a></div></article><div class="para" id="section-2-4-15-4">Since, to solve each system, we wish to reduce the matrix <span class="process-math">\(A\)</span> down to its RREF each time, we can combine all the systems into one big augmented matrix:<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="assemblage assemblage-like" id="ch2-answer-45"><h4 class="heading"><span class="title">Solution.</span></h4>
+<div class="para" id="ch2-answer-45-2">
+<span class="process-math">\([A \mid I_n] = \left[\begin{array}{rrrr|rrrr} a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; 1 &amp; 0 &amp; \cdots &amp; 0 \\ a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} &amp; 0 &amp; 1 &amp; \cdots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn} &amp; 0 &amp; 0 &amp; \cdots &amp; 1 \end{array}\right]\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-45-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Assemblage: Solution"><a href="#ch2-answer-45" title="Copy heading and permalink for Assemblage: Solution">🔗</a></div></article><article class="assemblage assemblage-like" id="section-2-4-15-6"><div class="para" id="section-2-4-15-6-1">
+<em class="alert">Algorithm for computing <span class="process-math">\(A^{-1}\)</span></em><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-6-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="section-2-4-15-6-2">
+<ul class="disc" id="section-2-4-15-6-2-1">
+<li id="section-2-4-15-6-2-1-1">
+<div class="para" id="section-2-4-15-6-2-1-1-1">Set up the augmented matrix <span class="process-math">\([A \vert I_n]\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-6-2-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#section-2-4-15-6-2-1-1" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+<li id="section-2-4-15-6-2-1-2">
+<div class="para" id="section-2-4-15-6-2-1-2-1">Apply elementary row operations to <span class="process-math">\([A \vert I_n]\)</span> to reduce it to <span class="process-math">\([I_n \vert{A^{-1}}]\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-6-2-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item"><a href="#section-2-4-15-6-2-1-2" title="Copy heading and permalink for Item">🔗</a></div>
+</li>
+</ul>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-6-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-4-15-6-3">If <span class="process-math">\(A\)</span> is an <span class="process-math">\(n\times n\)</span> matrix, either <span class="process-math">\(A\)</span> can be reduced to <span class="process-math">\(I_n\)</span> by elementary row operations or it cannot. In the first case, the algorithm produces <span class="process-math">\(A^{-1}\text{;}\)</span> in the second case, <span class="process-math">\(A^{-1}\)</span> does not exist.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-6-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Assemblage"><a href="#section-2-4-15-6" title="Copy heading and permalink for Assemblage">🔗</a></div></article><article class="example example-like" id="ch2-example-68"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.6</span><span class="period">.</span>
+</h4>
+<div class="para" id="ch2-example-68-1-1">Find <span class="process-math">\({A^{-1}}\)</span> where <span class="process-math">\(A = {\left[ \begin{array}{rrr} 1 &amp; 1 &amp; 4 \\ 2 &amp; 3 &amp; 2 \\ 0 &amp; 0 &amp; 1 \end{array} \right]}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-68-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-46" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-46-1">
+<span class="process-math">\([A \vert I_3] = {\left[ \begin{array}{rrr|rrr} 1 &amp; 1 &amp; 4 &amp; 1 &amp; 0 &amp; 0 \\ 2 &amp; 3 &amp; 2 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-46-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-46-2">
+<span class="process-math">\(R_2 \to R_2 - 2R_1\text{:}\)</span> <span class="process-math">\({\left[ \begin{array}{rrr|rrr} 1 &amp; 1 &amp; 4 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; -6 &amp; -2 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-46-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-46-3">
+<span class="process-math">\(R_1 \to R_1 - R_2\text{:}\)</span> <span class="process-math">\({\left[ \begin{array}{rrr|rrr} 1 &amp; 0 &amp; 10 &amp; 3 &amp; -1 &amp; 0 \\ 0 &amp; 1 &amp; -6 &amp; -2 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-46-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-46-4">
+<span class="process-math">\(R_1 \to R_1 - 10R_3, R_2 \to R_2 + 6R_3\text{:}\)</span> <span class="process-math">\({\left[ \begin{array}{rrr|rrr} 1 &amp; 0 &amp; 0 &amp; 3 &amp; -1 &amp; -10 \\ 0 &amp; 1 &amp; 0 &amp; -2 &amp; 1 &amp; 6 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-46-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-46-5">Therefore: <span class="process-math">\(A^{-1} = {\left[ \begin{array}{rrr} 3 &amp; -1 &amp; -10 \\ -2 &amp; 1 &amp; 6 \\ 0 &amp; 0 &amp; 1 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-46-5" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.6.1"><a href="#ch2-answer-46" title="Copy heading and permalink for Solution 2.5.6.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.5.6"><a href="#ch2-example-68" title="Copy heading and permalink for Example 2.5.6">🔗</a></div></article><div class="para" id="section-2-4-15-8">Below is a useful compilation of facts and theorems, some of which we’ve discussed in class. You can find the remainder of the proofs in your textbook.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-8" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="assemblage assemblage-like" id="section-2-4-15-9"><div class="para" id="section-2-4-15-9-1">
+<em class="alert">Box Of Facts/Invertibility Criteria</em><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-4-15-9-2">Let <span class="process-math">\(A\)</span> be an <span class="process-math">\({n \times n}\)</span> matrix. The following are equivalent:<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para logical" id="section-2-4-15-9-3">
+<ol class="decimal ol-marker-1" id="section-2-4-15-9-3-1">
+<li id="section-2-4-15-9-3-1-1">
+<div class="para" id="section-2-4-15-9-3-1-1-1">
+<span class="process-math">\(A\)</span> is nonsingular.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-3-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 1"><a href="#section-2-4-15-9-3-1-1" title="Copy heading and permalink for Item 1">🔗</a></div>
+</li>
+<li id="section-2-4-15-9-3-1-2">
+<div class="para" id="section-2-4-15-9-3-1-2-1">
+<span class="process-math">\(A{\mathbf{x}}= {\mathbf{0}}\)</span> has only the trivial solution.<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-3-1-2-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 2"><a href="#section-2-4-15-9-3-1-2" title="Copy heading and permalink for Item 2">🔗</a></div>
+</li>
+<li id="section-2-4-15-9-3-1-3">
+<div class="para" id="section-2-4-15-9-3-1-3-1">
+<span class="process-math">\(A\)</span> is row equivalent to <span class="process-math">\(I_n\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-3-1-3-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 3"><a href="#section-2-4-15-9-3-1-3" title="Copy heading and permalink for Item 3">🔗</a></div>
+</li>
+<li id="section-2-4-15-9-3-1-4">
+<div class="para" id="section-2-4-15-9-3-1-4-1">The linear system <span class="process-math">\(A{\mathbf{x}}= {\mathbf{b}}\)</span> has a unique solution for every <span class="process-math">\(n \times 1\)</span> matrix <span class="process-math">\({\mathbf{b}}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-3-1-4-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 4"><a href="#section-2-4-15-9-3-1-4" title="Copy heading and permalink for Item 4">🔗</a></div>
+</li>
+<li id="section-2-4-15-9-3-1-5">
+<div class="para" id="section-2-4-15-9-3-1-5-1">
+<span class="process-math">\(\mathop{\mathrm{rank}}(A)=n\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-3-1-5-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Item 5"><a href="#section-2-4-15-9-3-1-5" title="Copy heading and permalink for Item 5">🔗</a></div>
+</li>
+</ol>
+<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-15-9-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Assemblage"><a href="#section-2-4-15-9" title="Copy heading and permalink for Assemblage">🔗</a></div></article><div class="autopermalink" data-description="Paragraphs: Algorithm for Calculating Inverses"><a href="#section-2-4-15" title="Copy heading and permalink for Paragraphs: Algorithm for Calculating Inverses">🔗</a></div></section><section class="paragraphs" id="section-2-4-16"><h3 class="heading"><span class="title">Inverses of Matrix Transformations.</span></h3>
+<div class="para" id="section-2-4-16-2">Let <span class="process-math">\(T=T_A:\mathbb{R}^n\to\mathbb{R}^n\)</span> be a matrix transformation induced by the <span class="process-math">\(n\times n\)</span> matrix <span class="process-math">\(A\text{.}\)</span> What does invertibility imply about the geometry of the transformation <span class="process-math">\(T_A\text{?}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-16-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-4-16-3">Consider <span class="process-math">\(T'=T_{A^{-1}}\text{.}\)</span> What happens when we compose them?<div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-16-3" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-4-16-4">
+<span class="process-math">\(T\circ T'(\mathbf{x})=\underline{T_A(T_{A^{-1}}(\mathbf{x})) = T_A(A^{-1}\mathbf{x}) = A(A^{-1}\mathbf{x}) = (AA^{-1})\mathbf{x} = I_n\mathbf{x} = \mathbf{x}}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-16-4" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="section-2-4-16-5">
+<span class="process-math">\(T'\circ T(\mathbf{x})=\underline{T_{A^{-1}}(T_A(\mathbf{x})) = T_{A^{-1}}(A\mathbf{x}) = A^{-1}(A\mathbf{x}) = (A^{-1}A)\mathbf{x} = I_n\mathbf{x} = \mathbf{x}}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#section-2-4-16-5" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<article class="definition definition-like" id="ch2-definition-69"><h4 class="heading">
+<span class="type">Definition</span><span class="space"> </span><span class="codenumber">2.5.7</span><span class="period">.</span>
+</h4>
+<div class="para" id="ch2-definition-69-1-1">Given a matrix transformation <span class="process-math">\(T:\mathbb{R}^n\to\mathbb{R}^n\text{,}\)</span> if there exists a transformation <span class="process-math">\(S:\mathbb{R}^n\to\mathbb{R}^n\)</span> such that <span class="process-math">\(S(T(\mathbf{x}))=\underline{T(S(\mathbf{x}))}=\underline{\mathbf{x}}\)</span> for all <span class="process-math">\(\mathbf{x}\in \mathbb{R}^n\text{,}\)</span> we say that <span class="process-math">\(T\)</span> has an inverse.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-definition-69-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Definition 2.5.7"><a href="#ch2-definition-69" title="Copy heading and permalink for Definition 2.5.7">🔗</a></div></article><article class="theorem theorem-like" id="ch2-theorem-70"><h4 class="heading">
+<span class="type">Theorem</span><span class="space"> </span><span class="codenumber">2.5.8</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="ch2-theorem-70-1-1">
+<div class="para">Let <span class="process-math">\(T:\mathbb{R}^n\to\mathbb{R}^n\)</span> denote the matrix transformation induced by an <span class="process-math">\(n\times n\)</span> matrix <span class="process-math">\(A\text{.}\)</span> Then <span class="process-math">\(A\)</span> is invertible if and only if <span class="process-math">\(T\)</span> has an inverse. In this case, <span class="process-math">\(T\)</span> has exactly one inverse (which we denote as <span class="process-math">\(T^{-1}\)</span>), and <span class="process-math">\(T^{-1} : \mathbb{R}^n\to\mathbb{R}^n\)</span> is the transformation induced by the matrix <span class="process-math">\(A^{-1}\text{.}\)</span> In other words</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(T_A)^{-1} = T_{A^{-1}}
+\end{equation*}
+</div>
+<div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-70-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-theorem-70-1-2">
+<span class="process-math">\(T\)</span> and <span class="process-math">\(T^{-1}\)</span> “reverse” or “undo” the action of each other.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-theorem-70-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Theorem 2.5.8"><a href="#ch2-theorem-70" title="Copy heading and permalink for Theorem 2.5.8">🔗</a></div></article><article class="example example-like" id="ch2-example-71"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.9</span><span class="period">.</span>
+</h4>
+<div class="para" id="ch2-example-71-1-1">Consider <span class="process-math">\(T:\mathbb{R}^2\to\mathbb{R}^2\)</span> given by reflection across the <span class="process-math">\(x\)</span>-axis. Find the matrix representing this transformation, and find the inverse.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-71-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-47" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-47-1">T is given by matrix <span class="process-math">\(A = {\left[ \begin{array}{rr} 1 &amp; 0 \\ 0 &amp; -1 \end{array} \right]}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-47-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-47-2">Since <span class="process-math">\(A^2 = I_2\text{,}\)</span> <span class="process-math">\(A\)</span> is its own inverse, so <span class="process-math">\(T^{-1} = T\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-47-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.9.1"><a href="#ch2-answer-47" title="Copy heading and permalink for Solution 2.5.9.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Example 2.5.9"><a href="#ch2-example-71" title="Copy heading and permalink for Example 2.5.9">🔗</a></div></article><article class="example example-like" id="ch2-example-72"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.10</span><span class="period">.</span>
+</h4>
+<article class="task exercise-like" id="ch2-example-72-part-1"><h5 class="heading"><span class="codenumber">(a)</span></h5>
+<div class="para" id="ch2-example-72-part-1-1-1">Consider <span class="process-math">\(P:\mathbb{R}^2\to\mathbb{R}^2\)</span> by <span class="process-math">\(P\left(\begin{bmatrix} a_1 \\ a_2\end{bmatrix}\right)=\begin{bmatrix} a_1 \\ 0\end{bmatrix}\text{.}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-72-part-1-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div> <div class="para" id="ch2-example-72-part-1-1-2">Is this a matrix transformation?<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-72-part-1-1-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-48" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-48-1">Yes, <span class="process-math">\(P\)</span> is a matrix transformation. It can be represented by the matrix <span class="process-math">\(A = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-48-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="para" id="ch2-answer-48-2">To verify: <span class="process-math">\(P\left(\begin{bmatrix} a_1 \\ a_2\end{bmatrix}\right) = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}\begin{bmatrix} a_1 \\ a_2\end{bmatrix} = \begin{bmatrix} a_1 \\ 0\end{bmatrix}\)</span><div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-48-2" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.10.a.1"><a href="#ch2-answer-48" title="Copy heading and permalink for Solution 2.5.10.a.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Task 2.5.10.a"><a href="#ch2-example-72-part-1" title="Copy heading and permalink for Task 2.5.10.a">🔗</a></div></article><article class="task exercise-like" id="ch2-example-72-part-2"><h5 class="heading"><span class="codenumber">(b)</span></h5>
+<div class="para" id="ch2-example-72-part-2-1-1">Is this invertible?<div class="autopermalink" data-description="Paragraph"><a href="#ch2-example-72-part-2-1-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="solutions"><details id="ch2-answer-49" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="ch2-answer-49-1">No, <span class="process-math">\(P\)</span> is not invertible. Note that <span class="process-math">\(\det(A) = 0\text{,}\)</span> so <span class="process-math">\(A\)</span> is not invertible.<div class="autopermalink" data-description="Paragraph"><a href="#ch2-answer-49-1" title="Copy heading and permalink for Paragraph">🔗</a></div>
+</div>
+<div class="autopermalink" data-description="Solution 2.5.10.b.1"><a href="#ch2-answer-49" title="Copy heading and permalink for Solution 2.5.10.b.1">🔗</a></div>
+</div></details></div>
+<div class="autopermalink" data-description="Task 2.5.10.b"><a href="#ch2-example-72-part-2" title="Copy heading and permalink for Task 2.5.10.b">🔗</a></div></article><div class="autopermalink" data-description="Example 2.5.10"><a href="#ch2-example-72" title="Copy heading and permalink for Example 2.5.10">🔗</a></div></article><div class="autopermalink" data-description="Paragraphs: Inverses of Matrix Transformations"><a href="#section-2-4-16" title="Copy heading and permalink for Paragraphs: Inverses of Matrix Transformations">🔗</a></div></section><div class="autopermalink" data-description="Section 2.5: Matrix Inverses"><a href="#section-2-4" title="Copy heading and permalink for Section 2.5: Matrix Inverses">🔗</a></div></section></div>
+<div id="ptx-content-footer" class="ptx-content-footer">
+<a class="previous-button button" href="section-2-6.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="chapter-3.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="338 3000 8772 6866" role="img"><title>PreTeXt logo</title><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png" alt="Runstone Academy logo"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png" alt="MathJax logo"></a>
+</div>
+</body>
+</html>
